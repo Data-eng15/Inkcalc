@@ -1,0 +1,222 @@
+<html>
+ <head>
+  <title>
+   MathGPT Clone
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   .upload-option:hover .icon {
+            transform: scale(1.1);
+        }
+        .bg-math-primary {
+            background-color: #1E3A8A; /* Dark blue */
+        }
+        .bg-math-secondary {
+            background-color: #3B82F6; /* Blue */
+        }
+        .text-math-primary {
+            color: #1E3A8A; /* Dark blue */
+        }
+        .text-math-secondary {
+            color: #3B82F6; /* Blue */
+        }
+        .border-math-primary {
+            border-color: #1E3A8A; /* Dark blue */
+        }
+        .border-math-secondary {
+            border-color: #3B82F6; /* Blue */
+        }
+        .rounded-oval {
+            border-radius: 25px;
+        }
+  </style>
+ </head>
+ <body class="bg-white text-gray-800 font-sans">
+  <div class="flex h-screen">
+   <!-- Sidebar -->
+   <div class="w-64 bg-gray-100 border-r border-gray-200 p-4" id="sidebar">
+    <div class="flex items-center mb-6">
+     <i class="fas fa-bars text-gray-600 cursor-pointer" onclick="toggleSidebar()">
+     </i>
+     <span class="ml-2 text-lg font-semibold text-math-primary cursor-pointer" onclick="newChat()">
+      MathGPT
+     </span>
+    </div>
+    <div class="mt-auto">
+     <button class="text-math-secondary">
+      Upgrade plan
+     </button>
+     <p class="text-xs text-gray-500">
+      More access to the best models
+     </p>
+    </div>
+   </div>
+   <!-- Main Content -->
+   <div class="flex-1 p-8">
+    <div class="flex justify-between items-center mb-8">
+     <h1 class="text-2xl font-semibold text-math-primary">
+      MathGPT
+     </h1>
+    </div>
+    <div class="flex flex-col items-center justify-center h-full">
+     <h2 class="text-3xl font-semibold mb-6 text-math-primary">
+      What can I help with?
+     </h2>
+     <div class="flex items-center w-full max-w-lg mb-4 relative">
+      <i class="fas fa-paperclip text-gray-400 mr-2 cursor-pointer" onclick="toggleUploadOptions()">
+      </i>
+      <input class="flex-1 p-2 border border-gray-300 rounded-full" id="user-input" placeholder="Message MathGPT" type="text"/>
+      <button class="ml-2 p-2 bg-math-primary text-white rounded-oval" onclick="sendMessage()">
+       <i class="fas fa-square-root-alt">
+       </i>
+      </button>
+      <div class="absolute top-10 left-0 bg-white border border-gray-300 rounded-lg shadow-lg p-2 hidden" id="upload-options">
+       <button class="upload-option flex items-center w-full text-left px-4 py-2 hover:bg-gray-100" onclick="document.getElementById('file-upload').click()">
+        <span>
+         Upload from Computer
+        </span>
+        <i class="fas fa-desktop text-gray-500 ml-2 icon">
+        </i>
+       </button>
+       <button class="upload-option flex items-center w-full text-left px-4 py-2 hover:bg-gray-100">
+        <span>
+         Upload from Google Drive
+        </span>
+        <i class="fas fa-cloud text-gray-500 ml-2 icon">
+        </i>
+       </button>
+       <input class="hidden" id="file-upload" type="file"/>
+      </div>
+     </div>
+     <div class="flex space-x-2">
+      <button class="flex items-center px-4 py-2 bg-gray-100 border border-math-primary rounded-oval">
+       <i class="fas fa-square-root-alt text-green-500 mr-2">
+       </i>
+       <span class="text-math-primary">
+        Solve Equations
+       </span>
+      </button>
+      <button class="flex items-center px-4 py-2 bg-gray-100 border border-math-primary rounded-oval">
+       <i class="fas fa-calculator text-yellow-500 mr-2">
+       </i>
+       <span class="text-math-primary">
+        Calculate Integrals
+       </span>
+      </button>
+      <button class="flex items-center px-4 py-2 bg-gray-100 border border-math-primary rounded-oval">
+       <i class="fas fa-chart-pie text-blue-500 mr-2">
+       </i>
+       <span class="text-math-primary">
+        Plot Graphs
+       </span>
+      </button>
+      <button class="flex items-center px-4 py-2 bg-gray-100 border border-math-primary rounded-oval">
+       <i class="fas fa-superscript text-orange-500 mr-2">
+       </i>
+       <span class="text-math-primary">
+        Simplify Expressions
+       </span>
+      </button>
+      <button class="flex items-center px-4 py-2 bg-gray-100 border border-math-primary rounded-oval" onclick="toggleMoreOptions()">
+       <span class="text-math-primary">
+        More
+       </span>
+      </button>
+     </div>
+     <div class="absolute top-20 left-0 bg-white border border-gray-300 rounded-lg shadow-lg p-2 hidden" id="more-options">
+      <button class="flex items-center w-full text-left px-4 py-2 hover:bg-gray-100">
+       <span class="text-math-primary">
+        Scribble.io
+       </span>
+      </button>
+      <button class="flex items-center w-full text-left px-4 py-2 hover:bg-gray-100">
+       <span class="text-math-primary">
+        InkCalc.io
+       </span>
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <footer class="text-center text-xs text-gray-500 mt-4">
+   MathGPT can make mistakes. Check important info.
+  </footer>
+  <script>
+   function toggleUploadOptions() {
+            const uploadOptions = document.getElementById('upload-options');
+            uploadOptions.classList.toggle('hidden');
+        }
+
+        function toggleMoreOptions() {
+            const moreOptions = document.getElementById('more-options');
+            moreOptions.classList.toggle('hidden');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+
+        function newChat() {
+            // Logic to start a new chat
+            alert('Starting a new chat...');
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === '') {
+                alert('Please enter a message.');
+                return;
+            }
+
+            // Send the user input to the LLM model
+            fetch('https://your-llm-model-endpoint.com/api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from LLM model:', data);
+                // Handle the response from the LLM model
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        
+function solveMathProblem() {
+    const mathInput = document.querySelector('input[placeholder="Message MathGPT"]');
+    const prompt = mathInput.value.trim();
+    if (!prompt) {
+        alert('Please enter a math problem');
+        return;
+    }
+
+    fetch('/api/solve', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.result);  // You can replace this with a more sophisticated way to display the result
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while solving the problem');
+    });
+}
+
+// Add this to the existing script tag or create a new one if it doesn't exist
+document.querySelector('button.bg-math-primary').onclick = solveMathProblem;
+
+  </script>
+ </body>
+</html>

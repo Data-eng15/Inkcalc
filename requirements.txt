@@ -1,0 +1,7 @@
+Flask
+torch
+transformers
+Pillow
+
+
+pip install -r requirements.txt
